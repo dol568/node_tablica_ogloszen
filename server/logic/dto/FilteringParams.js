@@ -46,12 +46,12 @@ class FilteringParams {
       filteringParams._author = query.author;
     }
 
-    Object.keys(filteringParams).forEach(key => {
-        if (filteringParams[key] === undefined) {
-            delete filteringParams[key]
-        }
-        return filteringParams;
-    })
+    Object.keys(filteringParams).forEach((key) => {
+      if (filteringParams[key] === undefined) {
+        delete filteringParams[key];
+      }
+      return filteringParams;
+    });
 
     return filteringParams;
   }

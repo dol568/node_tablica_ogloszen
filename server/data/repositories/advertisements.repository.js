@@ -43,7 +43,7 @@ class AdvertisementsRepository {
   getAllTags = async () => {
     return this.dataSource.advertisement.schema.path("tags").caster.enumValues;
   };
-  
+
   getAllCategories = async () => {
     return this.dataSource.advertisement.schema.path("category").enumValues;
   };

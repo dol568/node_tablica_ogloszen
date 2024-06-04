@@ -25,9 +25,9 @@ class AdvertisementResponseDTO {
       entity.ratingsQuantity,
       entity.updatedAt,
       entity.slug,
-      entity._author.name ? 
-      { firstName: entity._author.name.first, lastName: entity._author.name.last, id: entity._author._id } :
-       entity._author._id  
+      entity._author.name
+        ? { firstName: entity._author.name.first, lastName: entity._author.name.last, id: entity._author._id }
+        : entity._author._id
     );
   }
 }

@@ -15,42 +15,45 @@ class CommentsRouter {
         this.advertisementsValidation.validateAdvertisementsId,
         this.commentsValidation.validateCommentQuery,
         this.commentsController.getAllComments
-      ).post(
+      )
+      .post(
         this.authController.requireAuth,
         this.advertisementsValidation.validateAdvertisementsId,
         this.commentsValidation.validateCreateComment,
         this.commentsController.createComment
-      )
+      );
 
-      this.router.route("/:commentId")
+    this.router
+      .route("/:commentId")
       .patch(
         this.authController.requireAuth,
         this.advertisementsValidation.validateAdvertisementsId,
         this.commentsValidation.validateCommentId,
         this.commentsValidation.validateUpdateComment,
         this.commentsController.updateComment
-      ).delete(
+      )
+      .delete(
         this.authController.requireAuth,
         this.advertisementsValidation.validateAdvertisementsId,
         this.commentsValidation.validateCommentId,
         this.commentsController.deleteComment
-      )
-
-      this.router.post(
-        "/:commentId/like",
-        this.authController.requireAuth,
-        this.advertisementsValidation.validateAdvertisementsId,
-        this.commentsValidation.validateCommentId,
-        this.commentsController.likeComment
       );
 
-      this.router.post(
-        "/:commentId/dislike",
-        this.authController.requireAuth,
-        this.advertisementsValidation.validateAdvertisementsId,
-        this.commentsValidation.validateCommentId,
-        this.commentsController.dislikeComment
-      );
+    this.router.post(
+      "/:commentId/like",
+      this.authController.requireAuth,
+      this.advertisementsValidation.validateAdvertisementsId,
+      this.commentsValidation.validateCommentId,
+      this.commentsController.likeComment
+    );
+
+    this.router.post(
+      "/:commentId/dislike",
+      this.authController.requireAuth,
+      this.advertisementsValidation.validateAdvertisementsId,
+      this.commentsValidation.validateCommentId,
+      this.commentsController.dislikeComment
+    );
 
     return this.router;
   }

@@ -44,9 +44,7 @@ commentSchema.virtual("_likes", {
 });
 
 commentSchema.pre(/^find/, function (next) {
-  this.populate([{ path: "_likes" },
-   { path: "_author", select: { "name.first": 1, "name.last": 1 } }
-  ]);
+  this.populate([{ path: "_likes" }, { path: "_author", select: { "name.first": 1, "name.last": 1 } }]);
   next();
 });
 

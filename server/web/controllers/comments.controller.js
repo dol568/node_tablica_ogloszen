@@ -27,18 +27,21 @@ class CommentsController {
     const response = this.baseHttpResponse.success(updatedComment);
     res.status(response.statusCode).send(response);
   });
+
   deleteComment = catchAsync(async (req, res) => {
     await this.commentsService.deleteComment(req.params, req.user.id);
 
     const response = this.baseHttpResponse.success({});
     res.status(response.statusCode).send(response);
   });
+
   likeComment = catchAsync(async (req, res) => {
     await this.commentsService.likeComment(req.params, req.user.id);
 
     const response = this.baseHttpResponse.success({});
     res.status(response.statusCode).send(response);
   });
+
   dislikeComment = catchAsync(async (req, res) => {
     await this.commentsService.dislikeComment(req.params, req.user.id);
 

@@ -7,13 +7,13 @@ class BaseHttpResponse {
     this.statusCode = statusCode;
   }
 
-  success = (data, statusCode = StatusCodes.OK)  => {
+  success = (data, statusCode = StatusCodes.OK) => {
     return new BaseHttpResponse(data, null, statusCode);
-  }
+  };
 
   failed = (error, statusCode = StatusCodes.BAD_REQUEST) => {
     return new BaseHttpResponse(null, error, statusCode);
-  }
+  };
 }
 
 module.exports = BaseHttpResponse;

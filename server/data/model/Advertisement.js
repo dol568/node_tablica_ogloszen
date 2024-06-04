@@ -68,16 +68,8 @@ const advertisementSchema = new Schema(
       ref: "User",
     },
   },
-  { timestamps: true}
+  { timestamps: true }
 );
-
-// advertisementSchema.set("toJSON", { virtuals: true });
-
-// advertisementSchema.virtual("_comments", {
-//   ref: "Comment",
-//   foreignField: "_advertisement",
-//   localField: "_id",
-// });
 
 advertisementSchema.pre(/^find/, function (next) {
   this.populate([{ path: "_author", select: { "name.first": 1, "name.last": 1 } }]);

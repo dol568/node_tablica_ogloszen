@@ -47,15 +47,15 @@ class DBService {
   get user() {
     return this.database.model("User");
   }
-  
+
   get advertisement() {
     return this.database.model("Advertisement");
   }
-  
+
   get comment() {
     return this.database.model("Comment");
   }
-  
+
   get commentLike() {
     return this.database.model("CommentLike");
   }

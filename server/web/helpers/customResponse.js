@@ -1,17 +1,16 @@
 const textPlainResponse = (ad) => {
-    return (
-        `Title: ${ad.title}\n` +
-        `Author: ${ad.author.firstName} ${ad.author.lastName}\n` +
-        `Published on: ${ad.updatedAt.toLocaleDateString()}\n` +
-        `Category: ${ad.category}\n` +
-        `Price: ${ad.price}\n` +
-        `Content: ${ad.content}`
-    );
+  return (
+    `Title: ${ad.title}\n` +
+    `Author: ${ad.author.firstName} ${ad.author.lastName}\n` +
+    `Published on: ${ad.updatedAt.toLocaleDateString()}\n` +
+    `Category: ${ad.category}\n` +
+    `Price: ${ad.price}\n` +
+    `Content: ${ad.content}`
+  );
 };
 
 const textHtmlResponse = (ad) => {
-    return (
-        `<html>
+  return `<html>
         <body>
         <h3>Title: ${ad.title}</h3>
         <h4>Author: ${ad.author.firstName} ${ad.author.lastName}</h4>
@@ -20,8 +19,7 @@ const textHtmlResponse = (ad) => {
         <p>Price: ${ad.price}</p>
         <p>Content: ${ad.content}</p>
         </body>
-        </html>`
-    );
+        </html>`;
 };
 
-module.exports = {textPlainResponse, textHtmlResponse}
+module.exports = { textPlainResponse, textHtmlResponse };

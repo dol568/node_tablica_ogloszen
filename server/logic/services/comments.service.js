@@ -20,6 +20,7 @@ class CommentsService {
     const response = await this.commentsRepository.getAllComments(id, pagination);
     return CommentsResponseDTO.convert(response);
   };
+
   createComment = async (commentData, advertisementId, userId) => {
     await this._getAdvertisement(advertisementId);
     const commentDTO = CommentRequestDTO.convert(commentData, userId, advertisementId);
@@ -27,6 +28,7 @@ class CommentsService {
 
     return CommentResponseDTO.convert(response);
   };
+
   updateComment = async (commentData, params, userId) => {
     const { advertisementId, commentId } = params;
     const foundComment = await this._getComment(advertisementId, commentId, userId);
@@ -35,6 +37,7 @@ class CommentsService {
 
     return CommentResponseDTO.convert(response);
   };
+
   deleteComment = async (params, userId) => {
     const { advertisementId, commentId } = params;
     await this._getComment(advertisementId, commentId, userId);
@@ -45,9 +48,11 @@ class CommentsService {
   likeComment = async (params, userId) => {
     await this._toggleCommentLike(params, userId, true);
   };
+
   dislikeComment = async (params, userId) => {
     await this._toggleCommentLike(params, userId, false);
   };
+
   _toggleCommentLike = async (params, userId, liked) => {
     const { advertisementId, commentId } = params;
     await this._getComment(advertisementId, commentId);
@@ -69,6 +74,7 @@ class CommentsService {
       }
     }
   };
+
   _getAdvertisement = async (id) => {
     const foundAdvertisement = await this.advertisementsRepository.getAdvertisementById(id);
     if (!foundAdvertisement) {
@@ -76,6 +82,7 @@ class CommentsService {
     }
     return foundAdvertisement;
   };
+
   _getComment = async (advertisementId, commentId, userId = null) => {
     const foundAdvertisement = await this._getAdvertisement(advertisementId);
     const foundComment = await this.commentsRepository.getOneComment(commentId);
