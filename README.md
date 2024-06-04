@@ -55,14 +55,18 @@ npm run dev
 Dane do logowania
 
 ```json
-{
-  "email": "sarah@gmail.com",
-  "password": "123",
-
-  "email": "colin@gmail.com",
-  "password": "123",
-
-  "email": "adam@gmail.com",
-  "password": "123"
-}
+[
+  {
+    "email": "sarah@gmail.com",
+    "password": "123"
+  },
+  {
+    "email": "colin@gmail.com",
+    "password": "123"
+  },
+  {
+    "email": "adam@gmail.com",
+    "password": "123"
+  }
+]
 ```
