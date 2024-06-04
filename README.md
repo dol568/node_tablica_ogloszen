@@ -5,8 +5,13 @@
 ```
 cd .\server\
 ```
+- pliki do Postmana
 
-- plik .env (przy zmianie portu na inny trzeba uzyc tego samego nr poru w .\client\src\context\axiosInstance.jsx)
+```
+.\server\postman
+```
+
+- plik .env (przy zmianie portu na inny trzeba uzyc tego samego numeru portu w .\client\src\context\axiosInstance.jsx)
 
 ```
 CONNECTION_STRING="mongodb+srv://admin:admin123@cluster0.juy7b2h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
