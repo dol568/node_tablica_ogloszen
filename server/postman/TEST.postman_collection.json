@@ -1,0 +1,967 @@
+{
+	"info": {
+		"_postman_id": "cb771d75-4c77-4c2e-8a7b-45b8ebe13035",
+		"name": "TEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24545289",
+		"_collection_link": "https://www.postman.com/speeding-astronaut-986842/workspace/node-zal/collection/24545289-cb771d75-4c77-4c2e-8a7b-45b8ebe13035?action=share&source=collection_link&creator=24545289"
+	},
+	"item": [
+		{
+			"name": "POST - login success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"const expectedContentType = \"application/json; charset=utf-8\"\r",
+							"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+							"});\r",
+							"\r",
+							"const cookieName = pm.collectionVariables.get(\"cookieName\");\r",
+							"pm.test(\"Cookie \" + cookieName + \" is present\", () => {\r",
+							"  pm.expect(pm.cookies.has(cookieName)).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"sarah@gmail.com\",\r\n\t\"password\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - create Advertisement success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"  pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"const expectedContentType = \"application/json; charset=utf-8\"\r",
+							"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+							"});\r",
+							"\r",
+							"const cookieName = pm.collectionVariables.get(\"cookieName\");\r",
+							"pm.test(\"Cookie \" + cookieName + \" is present\", () => {\r",
+							"  pm.expect(pm.cookies.has(cookieName)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"const responseJson = pm.response.json()\r",
+							"\r",
+							"pm.collectionVariables.set(\"advertisementId\", responseJson.data.id);\r",
+							"const req_body = JSON.parse(pm.collectionVariables.get(\"req_body\"));\r",
+							"\r",
+							"pm.test(\"Price and title are correct\", () => {\r",
+							"  pm.expect(responseJson.data.title).to.eql(req_body.title);\r",
+							"  pm.expect(responseJson.data.price).to.eql(req_body.price);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const body = \r",
+							"  {\r",
+							"\t\"_id\": \"1111\",\r",
+							"\t\"title\": \"newAdvertismeent5\",\r",
+							"\t\"slug\": \"advert9slug\",\r",
+							"\t\"published\": true,\r",
+							"\t\"content\": \"newAdContent\",\r",
+							"\t\"tags\": [\r",
+							"\t\t\"chalk\",\r",
+							"\t\t\"turkey\"\r",
+							"\t],\r",
+							"\t\"price\": 100,\r",
+							"\t\"createdAt\": \"2024-04-24T06:13:39.392Z\",\r",
+							"\t\"comments\": [],\r",
+							"\t\"category\": \"education\",\r",
+							"\t\"__v\": 0,\r",
+							"\t\"_author\": \"2222\"\r",
+							"  };\r",
+							"\r",
+							"pm.collectionVariables.set('req_body', JSON.stringify(body));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{req_body}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/advertisements",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advertisements"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Find advertisement success - application/json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"const expectedContentType = \"application/json; charset=utf-8\"\r",
+							"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+							"});\r",
+							"\r",
+							"const cookieName = pm.collectionVariables.get(\"cookieName\");\r",
+							"pm.test(\"Cookie \" + cookieName + \" is present\", () => {\r",
+							"  pm.expect(pm.cookies.has(cookieName)).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/advertisements/:advertisementId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advertisements",
+						":advertisementId"
+					],
+					"variable": [
+						{
+							"key": "advertisementId",
+							"value": "{{advertisementId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH - update Advertisement success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"const expectedContentType = \"application/json; charset=utf-8\"\r",
+							"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+							"});\r",
+							"\r",
+							"const cookieName = pm.collectionVariables.get(\"cookieName\");\r",
+							"pm.test(\"Cookie \" + cookieName + \" is present\", () => {\r",
+							"  pm.expect(pm.cookies.has(cookieName)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"const responseJson = pm.response.json()\r",
+							"\r",
+							"const req_body = JSON.parse(pm.collectionVariables.get(\"req_body\"));\r",
+							"const update_req_body = JSON.parse(pm.collectionVariables.get(\"update_req_body\"));\r",
+							"\r",
+							"pm.test(\"Price and title are correct\", () => {\r",
+							"  pm.expect(responseJson.data.title).to.eql(update_req_body.title);\r",
+							"  pm.expect(responseJson.data.price).to.eql(req_body.price);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const body = {\r",
+							"\t\"title\": \"updatedTitle\",\r",
+							"\t\"slug\": \"updatedSlug\",\r",
+							"\t\"published\": true,\r",
+							"\t\"tags\": [\r",
+							"\t\t\"chalk\"\r",
+							"\t],\r",
+							"\t\r",
+							"\t\"createdAt\": \"2024-04-24T06:13:39.392Z\",\r",
+							"\t\"comments\": [],\r",
+							"    \"_id\": \"662dcc93c\"\r",
+							"}\r",
+							"\r",
+							"pm.collectionVariables.set('update_req_body', JSON.stringify(body));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{update_req_body}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/advertisements/:advertisementId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advertisements",
+						":advertisementId"
+					],
+					"variable": [
+						{
+							"key": "advertisementId",
+							"value": "{{advertisementId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - create Comment success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"  pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"const expectedContentType = \"application/json; charset=utf-8\"\r",
+							"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+							"});\r",
+							"\r",
+							"const cookieName = pm.collectionVariables.get(\"cookieName\");\r",
+							"pm.test(\"Cookie \" + cookieName + \" is present\", () => {\r",
+							"  pm.expect(pm.cookies.has(cookieName)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"const responseJson = pm.response.json()\r",
+							"\r",
+							"pm.collectionVariables.set(\"commentId\", responseJson.data.id);\r",
+							"const req_body = JSON.parse(pm.collectionVariables.get(\"comment_req_body\"));\r",
+							"\r",
+							"pm.test(\"Content and rating are correct\", () => {\r",
+							"  pm.expect(responseJson.data.content).to.eql(req_body.content);\r",
+							"  pm.expect(responseJson.data.rating).to.eql(req_body.rating);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const body = \r",
+							"{\r",
+							"  \"_id\": \"671dcc92a\",\r",
+							"  \"content\": \"Consectetur\",\r",
+							"  \"rating\": 4,\r",
+							"  \"updatedAt\": \"2023-12-19T23:00:00.000Z\",\r",
+							"  \"_author\": \"662dcc93c1aec99477a63029\",\r",
+							"  \"_advertisement\": \"662f6f17e48e56b9d21c0ee1\",\r",
+							"  \"_likes\": []\r",
+							"}\r",
+							"\r",
+							"pm.collectionVariables.set('comment_req_body', JSON.stringify(body));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{comment_req_body}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/advertisements/:advertisementId/comments",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advertisements",
+						":advertisementId",
+						"comments"
+					],
+					"variable": [
+						{
+							"key": "advertisementId",
+							"value": "{{advertisementId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH - update Comment success",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const body = {\r",
+							"    \"_id\": \"6634f9ccdf462a99f4b24a\",\r",
+							"    \"rating\": 1,\r",
+							"    \"createdAt\": \"2024-05-03T14:50:52.288Z\",\r",
+							"    \"updatedAt\": \"2024-05-03T14:50:52.288Z\",\r",
+							"    \"author\": \"662dcc93c1aec99477a63028\",\r",
+							"    \"advertisement\": \"662dcc93c1aec99477a63023\",\r",
+							"    \"__v\": 0\r",
+							"}\r",
+							"\r",
+							"pm.collectionVariables.set('update_comment_req_body', JSON.stringify(body));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"const expectedContentType = \"application/json; charset=utf-8\"\r",
+							"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+							"});\r",
+							"\r",
+							"const cookieName = pm.collectionVariables.get(\"cookieName\");\r",
+							"pm.test(\"Cookie \" + cookieName + \" is present\", () => {\r",
+							"  pm.expect(pm.cookies.has(cookieName)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"const responseJson = pm.response.json()\r",
+							"\r",
+							"const req_body = JSON.parse(pm.collectionVariables.get(\"comment_req_body\"));\r",
+							"const update_req_body = JSON.parse(pm.collectionVariables.get(\"update_comment_req_body\"));\r",
+							"\r",
+							"pm.test(\"Content and rating are correct\", () => {\r",
+							"  pm.expect(responseJson.data.rating).to.eql(update_req_body.rating);\r",
+							"  pm.expect(responseJson.data.content).to.eql(req_body.content);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{update_comment_req_body}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/advertisements/:advertisementId/comments/:commentId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advertisements",
+						":advertisementId",
+						"comments",
+						":commentId"
+					],
+					"variable": [
+						{
+							"key": "advertisementId",
+							"value": "{{advertisementId}}"
+						},
+						{
+							"key": "commentId",
+							"value": "{{commentId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - like Comment success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"const expectedContentType = \"application/json; charset=utf-8\"\r",
+							"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+							"});\r",
+							"\r",
+							"const cookieName = pm.collectionVariables.get(\"cookieName\");\r",
+							"pm.test(\"Cookie \" + cookieName + \" is present\", () => {\r",
+							"  pm.expect(pm.cookies.has(cookieName)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"const responseJson = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Data is empty\", () => {\r",
+							"  pm.expect(responseJson.data).to.be.empty\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/advertisements/:advertisementId/comments/:commentId/like",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advertisements",
+						":advertisementId",
+						"comments",
+						":commentId",
+						"like"
+					],
+					"variable": [
+						{
+							"key": "advertisementId",
+							"value": "{{advertisementId}}"
+						},
+						{
+							"key": "commentId",
+							"value": "{{commentId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - All Comments for advertisement success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"const expectedContentType = \"application/json; charset=utf-8\"\r",
+							"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+							"});\r",
+							"\r",
+							"const cookieName = pm.collectionVariables.get(\"cookieName\");\r",
+							"pm.test(\"Cookie \" + cookieName + \" is present\", () => {\r",
+							"  pm.expect(pm.cookies.has(cookieName)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"const expectedNumberOfComments = 1;\r",
+							"const expectedNumberOfCommentLikes = 1;\r",
+							"const responseJson = pm.response.json()\r",
+							"\r",
+							"pm.test('Number of advertisements returned = ' + expectedNumberOfComments, () => {\r",
+							"    pm.expect(responseJson.data.docs.length).to.equal(expectedNumberOfComments);\r",
+							"    pm.expect(responseJson.data.docs[0].likes.length).to.equal(expectedNumberOfCommentLikes);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/advertisements/:advertisementId/comments",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advertisements",
+						":advertisementId",
+						"comments"
+					],
+					"variable": [
+						{
+							"key": "advertisementId",
+							"value": "{{advertisementId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE - delete Comment success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"const expectedContentType = \"application/json; charset=utf-8\"\r",
+							"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+							"});\r",
+							"\r",
+							"const cookieName = pm.collectionVariables.get(\"cookieName\");\r",
+							"pm.test(\"Cookie \" + cookieName + \" is present\", () => {\r",
+							"  pm.expect(pm.cookies.has(cookieName)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"const responseJson = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Data is empty\", () => {\r",
+							"  pm.expect(responseJson.data).to.be.empty\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/advertisements/:advertisementId/comments/:commentId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advertisements",
+						":advertisementId",
+						"comments",
+						":commentId"
+					],
+					"variable": [
+						{
+							"key": "advertisementId",
+							"value": "{{advertisementId}}"
+						},
+						{
+							"key": "commentId",
+							"value": "{{commentId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE - delete Advertisement success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"const expectedContentType = \"application/json; charset=utf-8\"\r",
+							"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+							"});\r",
+							"\r",
+							"const cookieName = pm.collectionVariables.get(\"cookieName\");\r",
+							"pm.test(\"Cookie \" + cookieName + \" is present\", () => {\r",
+							"  pm.expect(pm.cookies.has(cookieName)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"const responseJson = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Data is empty\", () => {\r",
+							"  pm.expect(responseJson.data).to.be.empty\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/advertisements/:advertisementId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advertisements",
+						":advertisementId"
+					],
+					"variable": [
+						{
+							"key": "advertisementId",
+							"value": "{{advertisementId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - All Advertisements success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"const expectedContentType = \"application/json; charset=utf-8\"\r",
+							"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+							"});\r",
+							"\r",
+							"const cookieName = pm.collectionVariables.get(\"cookieName\");\r",
+							"pm.test(\"Cookie \" + cookieName + \" is present\", () => {\r",
+							"  pm.expect(pm.cookies.has(cookieName)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"const expectedNumberOfAds = 3;\r",
+							"const responseJson = pm.response.json()\r",
+							"\r",
+							"pm.collectionVariables.set(\"advertisementId\", responseJson.data.id)\r",
+							"\r",
+							"pm.test('Number of advertisements returned = ' + expectedNumberOfAds, () => {\r",
+							"    pm.expect(responseJson.data.docs.length).to.equal(expectedNumberOfAds);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/advertisements",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advertisements"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - logout success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"const expectedContentType = \"application/json; charset=utf-8\"\r",
+							"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+							"});\r",
+							"\r",
+							"const cookieName = pm.collectionVariables.get(\"cookieName\");\r",
+							"pm.test(\"Cookie \" + cookieName + \" is not present\", () => {\r",
+							"  pm.expect(pm.cookies.has(cookieName)).to.be.false;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/logout",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "req_body",
+			"value": ""
+		},
+		{
+			"key": "cookieName",
+			"value": "app-auth",
+			"type": "string"
+		},
+		{
+			"key": "advertisementId",
+			"value": ""
+		},
+		{
+			"key": "update_req_body",
+			"value": ""
+		},
+		{
+			"key": "comment_req_body",
+			"value": ""
+		},
+		{
+			"key": "commentId",
+			"value": ""
+		},
+		{
+			"key": "update_comment_req_body",
+			"value": ""
+		}
+	]
+}

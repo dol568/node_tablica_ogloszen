@@ -1,0 +1,3732 @@
+{
+	"info": {
+		"_postman_id": "d9fbab5a-33d9-45b4-9fb5-e0d546d5db8e",
+		"name": "ADS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24545289",
+		"_collection_link": "https://www.postman.com/speeding-astronaut-986842/workspace/node-zal/collection/24545289-d9fbab5a-33d9-45b4-9fb5-e0d546d5db8e?action=share&source=collection_link&creator=24545289"
+	},
+	"item": [
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "POST - login success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type header is present\", () => {\r",
+									"  pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"const expectedContentType = \"application/json; charset=utf-8\"\r",
+									"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+									"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+									"});\r",
+									"\r",
+									"const cookieName = \"app-auth\"\r",
+									"pm.test(\"Cookie \" + cookieName + \" is present\", () => {\r",
+									"  pm.expect(pm.cookies.has(cookieName)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"sarah@gmail.com\",\r\n\t\"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - login user not found",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"sarah@gmal.com\",\r\n\t\"password\": \"user123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - login incorrect password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"sarah@gmail.com\",\r\n\t\"password\": \"user456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - login empty body",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - login invalid username",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"davegmail.com\",\r\n\t\"password\": \"user456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - login invalid password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"dave@gmail.com\",\r\n\t\"password\": \"user456&\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - logout success",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "GET - All Users success",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Find user success",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/662dcc93c1aec99477a6302a",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"662dcc93c1aec99477a6302a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Find user not found",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/662dcc93c1aec99477a63023",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"662dcc93c1aec99477a63023"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Find user invalid id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/662dcc93c1aec99477a63xxy",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"662dcc93c1aec99477a63xxy"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "advertisements",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "GET - All Advertisements success",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements sort by price asc",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?order=asc&orderBy=price",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "order",
+											"value": "asc"
+										},
+										{
+											"key": "orderBy",
+											"value": "price"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements sort by price desc",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?order=desc&orderBy=price",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "order",
+											"value": "desc"
+										},
+										{
+											"key": "orderBy",
+											"value": "price"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements sort by date asc",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?order=asc&orderBy=updatedAt",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "order",
+											"value": "asc"
+										},
+										{
+											"key": "orderBy",
+											"value": "updatedAt"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements sort by date desc",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?order=desc&orderBy=updatedAt",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "order",
+											"value": "desc"
+										},
+										{
+											"key": "orderBy",
+											"value": "updatedAt"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements sort by title asc",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?order=asc&orderBy=title",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "order",
+											"value": "asc"
+										},
+										{
+											"key": "orderBy",
+											"value": "title"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements sort by title desc",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?order=desc&orderBy=title",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "order",
+											"value": "desc"
+										},
+										{
+											"key": "orderBy",
+											"value": "title"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements sort by category asc",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?order=asc&orderBy=category",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "order",
+											"value": "asc"
+										},
+										{
+											"key": "orderBy",
+											"value": "category"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements sort by category desc",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?order=desc&orderBy=category",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "order",
+											"value": "desc"
+										},
+										{
+											"key": "orderBy",
+											"value": "category"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements sort by rating asc",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?order=asc&orderBy=ratingsAverage",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "order",
+											"value": "asc"
+										},
+										{
+											"key": "orderBy",
+											"value": "ratingsAverage"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements sort by rating desc",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?order=desc&orderBy=ratingsAverage",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "order",
+											"value": "desc"
+										},
+										{
+											"key": "orderBy",
+											"value": "ratingsAverage"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements sort order & orderBy empty",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?order&orderBy",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "order",
+											"value": null
+										},
+										{
+											"key": "orderBy",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements sort order & orderBy invalid",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?order=ascending&orderBy=cena",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "order",
+											"value": "ascending"
+										},
+										{
+											"key": "orderBy",
+											"value": "cena"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by title",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?title=time",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "time"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by title empty",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?title=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by category",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?category=education",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "education"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by category empty",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?category=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by category invalid",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?category=edx",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "edx"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by content",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?content=lorem",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "content",
+											"value": "lorem"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by content empty",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?content=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "content",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by min price",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?minPrice=300.5",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "minPrice",
+											"value": "300.5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by min price empty",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?minPrice=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "minPrice",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by min price invalid",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?minPrice=-sto",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "minPrice",
+											"value": "-sto"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by max price",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?maxPrice=200",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "maxPrice",
+											"value": "200"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by max price empty",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?maxPrice=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "maxPrice",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by max price invalid",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?maxPrice=sto",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "maxPrice",
+											"value": "sto"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by from date",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?fromDate=2024-03-25",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "fromDate",
+											"value": "2024-03-25"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by from date empty",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?fromDate",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "fromDate",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by from date invalid",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?fromDate=2024/04/21",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "fromDate",
+											"value": "2024/04/21"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by to date",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?toDate=2024-01-12",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "toDate",
+											"value": "2024-01-12"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by to date empty",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?toDate=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "toDate",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by to date invalid",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?toDate=2023/11/06",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "toDate",
+											"value": "2023/11/06"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by tags",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?tags[]=chalk&tags[]=bomb",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "tags[]",
+											"value": "chalk"
+										},
+										{
+											"key": "tags[]",
+											"value": "bomb"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by tags empty",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?tags=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "tags",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by tags invalid",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?tags[]=chalky&tags[]=bomb",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "tags[]",
+											"value": "chalky"
+										},
+										{
+											"key": "tags[]",
+											"value": "bomb"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements set page number",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?page=1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements set page number empty",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?page=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements set page number zero",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?page=0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements set page number invalid",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?page=jeden",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "jeden"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements set page size",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?limit=2",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements set page size empty",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?limit=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements set page size zero",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?limit=0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements set page size invalid",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?limit=jeden",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "jeden"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by author",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?author=662dcc93c1aec99477a6302a",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "author",
+											"value": "662dcc93c1aec99477a6302a"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by author empty",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?author=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "author",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by author invalid id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?author=662dcc",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "author",
+											"value": "662dcc"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by empty query fields",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?title=&content=&category=&tags=&minPrice=&maxPrice=&fromDate=&toDate=&page=&limit=&order=&orderBy=&author",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": ""
+										},
+										{
+											"key": "content",
+											"value": ""
+										},
+										{
+											"key": "category",
+											"value": ""
+										},
+										{
+											"key": "tags",
+											"value": ""
+										},
+										{
+											"key": "minPrice",
+											"value": ""
+										},
+										{
+											"key": "maxPrice",
+											"value": ""
+										},
+										{
+											"key": "fromDate",
+											"value": ""
+										},
+										{
+											"key": "toDate",
+											"value": ""
+										},
+										{
+											"key": "page",
+											"value": ""
+										},
+										{
+											"key": "limit",
+											"value": ""
+										},
+										{
+											"key": "order",
+											"value": ""
+										},
+										{
+											"key": "orderBy",
+											"value": ""
+										},
+										{
+											"key": "author",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Advertisements filter by valid query fields",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements?title=time&content=sed&category=service&minPrice=200&maxPrice=200&fromDate=2023-11-05&toDate=2024-03-25&tags[]=chalk&tags[]=bomb&page=1&limit=10&order=desc&orderBy=ratingsAverage&author=662dcc93c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "time"
+										},
+										{
+											"key": "content",
+											"value": "sed"
+										},
+										{
+											"key": "category",
+											"value": "service"
+										},
+										{
+											"key": "minPrice",
+											"value": "200"
+										},
+										{
+											"key": "maxPrice",
+											"value": "200"
+										},
+										{
+											"key": "fromDate",
+											"value": "2023-11-05"
+										},
+										{
+											"key": "toDate",
+											"value": "2024-03-25"
+										},
+										{
+											"key": "tags[]",
+											"value": "chalk"
+										},
+										{
+											"key": "tags[]",
+											"value": "bomb"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "order",
+											"value": "desc"
+										},
+										{
+											"key": "orderBy",
+											"value": "ratingsAverage"
+										},
+										{
+											"key": "author",
+											"value": "662dcc93c1aec99477a6302b"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GET ONE",
+					"item": [
+						{
+							"name": "GET - Find advertisement success - application/json",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/667dcc93c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"667dcc93c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - Find advertisement success - text/plain",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/667dcc93c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"667dcc93c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - Find advertisement success - text/html",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/667dcc93c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"667dcc93c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - Find advertisement - not acceptable",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/667dcc93c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"667dcc93c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - Find advertisement - not found",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662dcc93c1aec99477a63020",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662dcc93c1aec99477a63020"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - Find advertisement - invalid id",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662dcc93c1aec99477a63xxy",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662dcc93c1aec99477a63xxy"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "POST - create Advertisement success",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"_id\": \"1111\",\r\n\t\"title\": \"newTitle11112\",\r\n\t\"slug\": \"advert9slug\",\r\n\t\"published\": true,\r\n\t\"content\": \"newAdContent\",\r\n\t\"tags\": [\r\n\t\t\"chalk\",\r\n\t\t\"turkey\"\r\n\t],\r\n\t\"price\": 500,\r\n\t\"createdAt\": \"2024-04-24T06:13:39.392Z\",\r\n\t\"comments\": [],\r\n\t\"category\": \"education\",\r\n\t\"__v\": 0,\r\n\t\"_author\": \"2222\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - create Advertisement empty body",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - create Advertisement missing or invalid fields",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"_id\": \"1111\",\r\n\t\"title\": \"newTitle\",\r\n\t\"slug\": \"advert9slug\",\r\n\t\"published\": true,\r\n\t\"content\": \"\",\r\n\t\"tags\": [],\r\n\t\"price\": 500,\r\n\t\"createdAt\": \"2024-04-24T06:13:39.392Z\",\r\n\t\"comments\": [],\r\n\t\"category\": \"education\",\r\n\t\"__v\": 0,\r\n\t\"author\": \"2222\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - create Advertisement duplicate title",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"_id\": \"1111\",\r\n\t\"title\": \"Limited Time: 50% Off Sale Ends Tonight at Midnight\",\r\n\t\"slug\": \"advert9slug\",\r\n\t\"published\": true,\r\n\t\"content\": \"newAdContent\",\r\n\t\"tags\": [\r\n\t\t\"chalk\",\r\n\t\t\"turkey\"\r\n\t],\r\n\t\"price\": 500,\r\n\t\"createdAt\": \"2024-04-24T06:13:39.392Z\",\r\n\t\"comments\": [],\r\n\t\"category\": \"education\",\r\n\t\"__v\": 0,\r\n\t\"author\": \"2222\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PATCH",
+					"item": [
+						{
+							"name": "PATCH - update Advertisement success",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"title\": \"updatedTitle\",\r\n\t\"slug\": \"updatedSlug\",\r\n\t\"published\": true,\r\n\t\"tags\": [\r\n\t\t\"chalk\"\r\n\t],\r\n    \"price\": 23.88,\r\n\t\r\n\t\"createdAt\": \"2024-04-24T06:13:39.392Z\",\r\n\t\"comments\": [],\r\n    \"_id\": \"662dcc93c\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH - update Advertisement invalid fields",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"title\": \"updat\",\r\n\t\"slug\": \"updatedSlug\",\r\n\t\"published\": true,\r\n\t\"tags\": [\r\n\t\t\"avenu\"\r\n\t],\r\n\t\r\n\t\"createdAt\": \"2024-04-24T06:13:39.392Z\",\r\n\t\"comments\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH - update Advertisement empty body",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH - update Advertisement not found",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Advert0001 6666\",\r\n    \"slug\": \"advert1slug\",\r\n    \"published\": true,\r\n    \"content\": \"Advert1content\",\r\n    \"tags\": [\r\n        \"chalk\"\r\n    ],\r\n    \"price\": 1500,\r\n    \"createdAt\": \"2024-04-24T06:13:39.392Z\",\r\n    \"comments\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662dcc93c1aec99477a63077",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662dcc93c1aec99477a63077"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH - update Advertisement invalid id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Advert0001 6666\",\r\n    \"slug\": \"advert1slug\",\r\n    \"published\": true,\r\n    \"content\": \"Advert1content\",\r\n    \"tags\": [\r\n        \"advert tags\"\r\n    ],\r\n    \"price\": 1500,\r\n    \"createdAt\": \"2024-04-24T06:13:39.392Z\",\r\n    \"comments\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662dcc93c1aec99477a63xxy",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662dcc93c1aec99477a63xxy"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH - update Advertisement different author",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Advert0001 6666\",\r\n    \"slug\": \"advert1slug\",\r\n    \"published\": true,\r\n    \"content\": \"Advert1content\",\r\n    \"tags\": [\r\n        \"bomb\"\r\n    ],\r\n    \"price\": 1500,\r\n    \"createdAt\": \"2024-04-24T06:13:39.392Z\",\r\n    \"comments\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/667dcc93c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"667dcc93c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "DELETE - delete Advertisement success",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE - delete Advertisement not found",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662dcc93c1aec99477a63777",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662dcc93c1aec99477a63777"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE - delete Advertisement invalid id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662dcc93c1aec99477a63ccy",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662dcc93c1aec99477a63ccy"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE - delete Advertisement different author",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/667dcc93c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"667dcc93c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "comments",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "GET - All Comments for advertisement success",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/666dcc93c1aec99477a6302b/comments",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"666dcc93c1aec99477a6302b",
+										"comments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - All Comments for advertisement invalid id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662dcc93c1aec99477a63xxy/comments",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662dcc93c1aec99477a63xxy",
+										"comments"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "POST - create Comment success",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"_id\": \"671dcc92a\",\r\n  \"content\": \"Consectetur\",\r\n  \"rating\": 1,\r\n  \"updatedAt\": \"2023-12-19T23:00:00.000Z\",\r\n  \"_author\": \"662dcc93c1aec99477a63029\",\r\n  \"_advertisement\": \"662f6f17e48e56b9d21c0ee1\",\r\n  \"_likes\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/667dcc93c1aec99477a6302b/comments",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"667dcc93c1aec99477a6302b",
+										"comments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - create Comment empty body",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/666dcc93c1aec99477a6302b/comments",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"666dcc93c1aec99477a6302b",
+										"comments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - create Comment advertisement not found",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"_id\": \"671dcc92a\",\r\n  \"content\": \"Consectetur\",\r\n  \"rating\": 1,\r\n  \"updatedAt\": \"2023-12-19T23:00:00.000Z\",\r\n  \"_author\": \"662dcc93c1aec99477a63029\",\r\n  \"_advertisement\": \"662f6f17e48e56b9d21c0ee1\",\r\n  \"_likes\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662dcc93c1aec99477a63053/comments",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662dcc93c1aec99477a63053",
+										"comments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - create Comment invalid advertisement id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"_id\": \"671dcc92a\",\r\n  \"content\": \"Consectetur\",\r\n  \"rating\": 1,\r\n  \"updatedAt\": \"2023-12-19T23:00:00.000Z\",\r\n  \"_author\": \"662dcc93c1aec99477a63029\",\r\n  \"_advertisement\": \"662f6f17e48e56b9d21c0ee1\",\r\n  \"_likes\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662dcc93c1aec953/comments",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662dcc93c1aec953",
+										"comments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - create Comment invalid fields",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"_id\": \"671dcc92a\",\r\n  \"content\": \"Conse\",\r\n  \"rating\": 10,\r\n  \"updatedAt\": \"2023-12-19T23:00:00.000Z\",\r\n  \"_author\": \"662dcc93c1aec99477a63029\",\r\n  \"_advertisement\": \"662f6f17e48e56b9d21c0ee1\",\r\n  \"_likes\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/666dcc93c1aec99477a6302b/comments",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"666dcc93c1aec99477a6302b",
+										"comments"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PATCH",
+					"item": [
+						{
+							"name": "PATCH - update Comment success",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"_id\": \"6634f9ccdf462a99f4b24a\",\r\n        \"content\": \"updatedComment\",\r\n        \"rating\": 1,\r\n        \"createdAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"updatedAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"author\": \"662dcc93c1aec99477a63028\",\r\n        \"advertisement\": \"662dcc93c1aec99477a63023\",\r\n        \"__v\": 0\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/666dcc93c1aec99477a6302b/comments/666dcc95c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"666dcc93c1aec99477a6302b",
+										"comments",
+										"666dcc95c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH - update Comment empty body",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/666dcc93c1aec99477a6302b/comments/666dcc95c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"666dcc93c1aec99477a6302b",
+										"comments",
+										"666dcc95c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH - update Comment invalid fields",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"_id\": \"6634f9ccdf462a99f4b24a\",\r\n        \"content\": \"upda\",\r\n        \"rating\": 7,\r\n        \"createdAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"updatedAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"author\": \"662dcc93c1aec99477a63028\",\r\n        \"advertisement\": \"662dcc93c1aec99477a63023\",\r\n        \"__v\": 0\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/666dcc93c1aec99477a6302b/comments/666dcc95c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"666dcc93c1aec99477a6302b",
+										"comments",
+										"666dcc95c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH - update Comment advertisement not found",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"_id\": \"6634f9ccdf462a99f4b24a\",\r\n        \"content\": \"updatedComment\",\r\n        \"rating\": 1,\r\n        \"createdAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"updatedAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"author\": \"662dcc93c1aec99477a63028\",\r\n        \"advertisement\": \"662dcc93c1aec99477a63023\",\r\n        \"__v\": 0\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662f6f17e48e56b9d21c0ee3/comments/671dcc93c1aec99477a6302a",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662f6f17e48e56b9d21c0ee3",
+										"comments",
+										"671dcc93c1aec99477a6302a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH - update Comment commment not found",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"_id\": \"6634f9ccdf462a99f4b24a\",\r\n        \"content\": \"updatedComment\",\r\n        \"rating\": 1,\r\n        \"createdAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"updatedAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"author\": \"662dcc93c1aec99477a63028\",\r\n        \"advertisement\": \"662dcc93c1aec99477a63023\",\r\n        \"__v\": 0\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/666dcc93c1aec99477a6302b/comments/666dcc95c1aec99477a6302f",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"666dcc93c1aec99477a6302b",
+										"comments",
+										"666dcc95c1aec99477a6302f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH - update Comment invalid advertisement id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"_id\": \"6634f9ccdf462a99f4b24a\",\r\n        \"content\": \"updatedComment\",\r\n        \"rating\": 1,\r\n        \"createdAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"updatedAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"author\": \"662dcc93c1aec99477a63028\",\r\n        \"advertisement\": \"662dcc93c1aec99477a63023\",\r\n        \"__v\": 0\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662f6f17e48e56b9d21c0xxy/comments/671dcc93c1aec99477a6302a",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662f6f17e48e56b9d21c0xxy",
+										"comments",
+										"671dcc93c1aec99477a6302a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH - update Comment invalid comment id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"_id\": \"6634f9ccdf462a99f4b24a\",\r\n        \"content\": \"updatedComment\",\r\n        \"rating\": 1,\r\n        \"createdAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"updatedAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"author\": \"662dcc93c1aec99477a63028\",\r\n        \"advertisement\": \"662dcc93c1aec99477a63023\",\r\n        \"__v\": 0\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662f6f17e48e56b9d21c0ee1/comments/671dcc93c1aec99477a63xxy",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662f6f17e48e56b9d21c0ee1",
+										"comments",
+										"671dcc93c1aec99477a63xxy"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH - update Comment comment advertisement mismatch",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"_id\": \"6634f9ccdf462a99f4b24a\",\r\n        \"content\": \"updatedComment\",\r\n        \"rating\": 1,\r\n        \"createdAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"updatedAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"author\": \"662dcc93c1aec99477a63028\",\r\n        \"advertisement\": \"662dcc93c1aec99477a63023\",\r\n        \"__v\": 0\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302b/comments/666dcc95c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302b",
+										"comments",
+										"666dcc95c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH - update Comment diif author",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"_id\": \"6634f9ccdf462a99f4b24a\",\r\n        \"content\": \"updatedComment\",\r\n        \"rating\": 1,\r\n        \"createdAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"updatedAt\": \"2024-05-03T14:50:52.288Z\",\r\n        \"author\": \"662dcc93c1aec99477a63028\",\r\n        \"advertisement\": \"662dcc93c1aec99477a63023\",\r\n        \"__v\": 0\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302b/comments/665dcc94c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302b",
+										"comments",
+										"665dcc94c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "DELETE - delete Comment advertisement not found",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662f6f17e48e56b9d21c0ee3/comments/671dcc93c1aec99477a6302a",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662f6f17e48e56b9d21c0ee3",
+										"comments",
+										"671dcc93c1aec99477a6302a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE - delete Comment comment not found",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/666dcc93c1aec99477a6302b/comments/666dcc95c1aec99477a6302f",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"666dcc93c1aec99477a6302b",
+										"comments",
+										"666dcc95c1aec99477a6302f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE - delete Comment invalid advertisement id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662f6f17e48e56b9d21c0xxy/comments/671dcc93c1aec99477a6302a",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662f6f17e48e56b9d21c0xxy",
+										"comments",
+										"671dcc93c1aec99477a6302a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE - delete Comment invalid comment id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662f6f17e48e56b9d21c0ee1/comments/671dcc93c1aec99477a63xxy",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662f6f17e48e56b9d21c0ee1",
+										"comments",
+										"671dcc93c1aec99477a63xxy"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE - delete Comment comment advertisement mismatch",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302b/comments/666dcc95c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302b",
+										"comments",
+										"666dcc95c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE - delete Comment diff author",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302b/comments/665dcc94c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302b",
+										"comments",
+										"665dcc94c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE - delete Comment success",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/666dcc93c1aec99477a6302b/comments/666dcc95c1aec99477a6302b",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"666dcc93c1aec99477a6302b",
+										"comments",
+										"666dcc95c1aec99477a6302b"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "likes",
+			"item": [
+				{
+					"name": "LIKE",
+					"item": [
+						{
+							"name": "POST - like Comment success",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302b/comments/665dcc94c1aec99477a6302b/like",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302b",
+										"comments",
+										"665dcc94c1aec99477a6302b",
+										"like"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - like Comment advertisement not found",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662f6f17e48e56b9d21c0ee3/comments/671dcc93c1aec99477a6302a/like",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662f6f17e48e56b9d21c0ee3",
+										"comments",
+										"671dcc93c1aec99477a6302a",
+										"like"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - like Comment comment not found",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302b/comments/665dcc94c1aec99477a6302e/like",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302b",
+										"comments",
+										"665dcc94c1aec99477a6302e",
+										"like"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - like Comment invalid advertisement id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662f6f17e48e56b9d21c0xxy/comments/671dcc93c1aec99477a6302a/like",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662f6f17e48e56b9d21c0xxy",
+										"comments",
+										"671dcc93c1aec99477a6302a",
+										"like"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - like Comment invalid comment id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662dcc93c1aec99477a63024/comments/670dcc93c1aec99477a63xxy/like",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662dcc93c1aec99477a63024",
+										"comments",
+										"670dcc93c1aec99477a63xxy",
+										"like"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - like Comment comment advertisement mismatch",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/666dcc93c1aec99477a6302b/comments/665dcc94c1aec99477a6302b/like",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"666dcc93c1aec99477a6302b",
+										"comments",
+										"665dcc94c1aec99477a6302b",
+										"like"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - like Comment diff author",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302b/comments/665dcc94c1aec99477a6302b/like",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302b",
+										"comments",
+										"665dcc94c1aec99477a6302b",
+										"like"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DISLIKE",
+					"item": [
+						{
+							"name": "POST - dislike Comment success",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302b/comments/665dcc94c1aec99477a6302b/dislike",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302b",
+										"comments",
+										"665dcc94c1aec99477a6302b",
+										"dislike"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - dislike Comment comment not found",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302b/comments/665dcc94c1aec99477a6302f/dislike",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302b",
+										"comments",
+										"665dcc94c1aec99477a6302f",
+										"dislike"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - dislike Comment advertisement not found",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302f/comments/665dcc94c1aec99477a6302b/dislike",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302f",
+										"comments",
+										"665dcc94c1aec99477a6302b",
+										"dislike"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - dislike Comment invalid advertisement id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662f6f17e48e56b9d21c0xxy/comments/670dcc93c1aec99477a6302a/dislike",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662f6f17e48e56b9d21c0xxy",
+										"comments",
+										"670dcc93c1aec99477a6302a",
+										"dislike"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - dislike Comment invalid comment id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/662dcc93c1aec99477a63024/comments/670dcc93c1aec99477a630xx/dislike",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"662dcc93c1aec99477a63024",
+										"comments",
+										"670dcc93c1aec99477a630xx",
+										"dislike"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - dislike Comment comment advertisement mismatch",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/666dcc93c1aec99477a6302b/comments/665dcc94c1aec99477a6302b/dislike",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"666dcc93c1aec99477a6302b",
+										"comments",
+										"665dcc94c1aec99477a6302b",
+										"dislike"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST - dislike Comment diff author",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/advertisements/665dcc93c1aec99477a6302b/comments/665dcc94c1aec99477a6302b/dislike",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"advertisements",
+										"665dcc93c1aec99477a6302b",
+										"comments",
+										"665dcc94c1aec99477a6302b",
+										"dislike"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "GET - not found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"  pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"const expectedContentType = \"image/png\"\r",
+							"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/advertis",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advertis"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - heartbeat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"const expectedContentType = \"application/json; charset=utf-8\"\r",
+							"pm.test(\"Content-Type header is \" + expectedContentType, () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include(expectedContentType);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/heartbeat",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"heartbeat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/advertisements/categories",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advertisements",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - tags",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/advertisements/tags",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advertisements",
+						"tags"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

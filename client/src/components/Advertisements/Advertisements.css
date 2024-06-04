@@ -1,0 +1,9 @@
+.wrapper-create {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    justify-content: start;
+    width: 50%;
+    place-items: center;
+  }

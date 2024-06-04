@@ -1,0 +1,11 @@
+.content {
+  
+    /* background-color: #d1ecf1; kolor tła */
+    display: flex; /* ustawiamy flexbox */
+    justify-content: start; /* wyśrodkuj w poziomie */
+    align-items: center; /* wyśrodkuj w pionie */
+    width: 90%; /* szerokość 100% */
+    flex-direction: column; /* ustawiamy kierunek flexboxa na kolumnę */
+    gap: 1em; /* odstęp między elementami */
+    margin-top: 80px;
+  }
